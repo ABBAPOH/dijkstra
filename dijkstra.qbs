@@ -5,6 +5,7 @@ Application {
     consoleApplication: true
 
     Depends { name: "cpp" }
+    Depends { name: "Qt.core" }
     cpp.cxxLanguageVersion: "c++11"
 
     files: [
