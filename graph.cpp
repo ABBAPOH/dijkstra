@@ -2,6 +2,7 @@
 
 #include <set>
 #include <unordered_set>
+#include <list>
 
 Graph::Graph()
 {
@@ -16,13 +17,7 @@ void Graph::read(std::istream &s)
     s >> vertexCount;
 
     for (int i = 0; i < vertexCount; ++i) {
-        int weight = 0;
-        s >> weight;
-        if (weight < 0)
-            throw std::runtime_error("Graph::read: Invalid weight: " + std::to_string(weight));
-
         auto vertex = std::make_shared<Vertex>();
-        vertex->weight = weight;
         vertexes.emplace(i, vertex);
     }
 
@@ -67,7 +62,7 @@ void Graph::dump()
               << "    vertexes: [" << std::endl;
     for (int i = 0; i < int(_vertexes.size()); ++i) {
         auto vertex = _vertexes[i];
-        std::cout << "        " << vertex->weight << "," << std::endl;
+        std::cout << "        " << i << "," << std::endl;
     }
     std::cout << std::endl << "    ]" << std::endl;
     std::cout << "}" << std::endl;
@@ -75,5 +70,24 @@ void Graph::dump()
 
 void Graph::findWay(int from, int to)
 {
+    int vertexCount = int(_vertexes.size());
+    const auto checkIndex = [vertexCount](int index) {
+        if (index < 0 || index >= vertexCount) {
+            throw std::runtime_error("Graph::read: Invalid vertex index: " +
+                                     std::to_string(index));
+        }
+    };
 
+    checkIndex(from);
+    checkIndex(to);
+
+    auto vertexFrom = _vertexes[from];
+    auto vertexTo = _vertexes[to];
+
+    std::list<VertexPtr> vertexes;
+    vertexes.push_back(vertexFrom);
+
+    while (!vertexes.empty()) {
+
+    }
 }

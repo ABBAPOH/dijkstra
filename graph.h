@@ -24,7 +24,6 @@ public:
         Vertex(const Vertex &other) = delete;
         Vertex &operator=(const Vertex &other) = delete;
 
-        int weight = 0;
         std::vector<VertexWeakPtr> vertexes;
     };
 
