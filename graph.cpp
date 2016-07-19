@@ -1,5 +1,6 @@
 #include "graph.h"
 
+#include <map>
 #include <set>
 #include <unordered_set>
 #include <list>
@@ -22,7 +23,7 @@ void Graph::read(std::istream &s)
     }
 
     typedef std::pair<int, int> Egde;
-    std::set<Egde> edges;
+    std::map<Egde, int> edges;
 
     int edgeCount = 0;
     s >> edgeCount;
@@ -35,22 +36,25 @@ void Graph::read(std::istream &s)
         };
 
         Egde e;
-        s >> e.first >> e.second;
+        int weight = 0;
+        s >> e.first >> e.second >> weight;
 
         checkIndex(e.first);
         checkIndex(e.second);
 
-        if (!edges.insert(e).second) {
+        if (!edges.insert({e, weight}).second) {
             throw std::runtime_error("Graph::read: Duplicate edge [" +
                                      std::to_string(e.first) + "->" +
                                      std::to_string(e.second) + "]");
         }
     }
 
-    for (auto edge : edges) {
+    for (auto item : edges) {
+        const auto edge = item.first;
+        const auto weight = item.second;
         const auto vertexFrom = vertexes[edge.first];
-        const auto vertexTo = vertexes[edge.second];
-        vertexFrom->vertexes.push_back(vertexTo);
+        const auto e = Edge(weight, edge.second);
+        vertexFrom->edges.push_back(e);
     }
 
     _vertexes.swap(vertexes);

@@ -18,13 +18,23 @@ public:
     using VertexPtr = std::shared_ptr<Vertex>;
     using VertexWeakPtr = std::shared_ptr<Vertex>;
 
+    struct Edge
+    {
+        Edge() = default;
+        Edge(int w, int v) : weight(w), vertex(v) {}
+
+        int weight = 0;
+        int vertex = 0;
+    };
+
     struct Vertex
     {
         Vertex() = default;
         Vertex(const Vertex &other) = delete;
         Vertex &operator=(const Vertex &other) = delete;
 
-        std::vector<VertexWeakPtr> vertexes;
+//        std::vector<VertexWeakPtr> vertexes;
+        std::vector<Edge> edges;
     };
 
 private:
