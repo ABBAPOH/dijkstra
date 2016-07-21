@@ -3,6 +3,7 @@
 #include <map>
 #include <set>
 #include <unordered_set>
+#include <unordered_map>
 #include <list>
 
 Graph::Graph()
@@ -88,10 +89,26 @@ void Graph::findWay(int from, int to)
     auto vertexFrom = _vertexes[from];
     auto vertexTo = _vertexes[to];
 
-    std::list<VertexPtr> vertexes;
-    vertexes.push_back(vertexFrom);
+    std::unordered_set<int> notVisitedVertexes;
+    std::unordered_set<int> visitedVertexes;
+    std::unordered_map<int, int> weights;
 
-    while (!vertexes.empty()) {
+    for (int i = 0; i < vertexCount; ++i) {
+        weights[i] = INT32_MAX;
+        notVisitedVertexes.insert(i);
+    }
+    weights[from] = 0;
+
+    while (!notVisitedVertexes.empty()) {
+        int vertexId = 0;
+        int weight = INT32_MAX;
+        for (auto v : notVisitedVertexes) {
+            if (weights[v] < weight) {
+                weight = weights[v];
+                vertexId = v;
+            }
+        }
+
 
     }
 }
